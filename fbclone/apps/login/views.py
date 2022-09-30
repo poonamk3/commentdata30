@@ -126,7 +126,6 @@ def like_post(request):
 
 def add_comment(request):
     if request.method == "POST":
-        # import pdb; pdb.set_trace()
         comment=request.POST.get('body')
         postSno =request.POST.get('post_id')
         post_obj= Post.objects.get(id=postSno)   
@@ -136,7 +135,8 @@ def add_comment(request):
         data = Comment.objects.values()
         commdata=data[len(data)-1]
         data = {
-            'body' : commdata['body'],
+            'datas' :commdata,
+            'users':request.user.username
         }
         return JsonResponse(data)
     else:

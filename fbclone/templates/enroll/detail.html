@@ -55,28 +55,28 @@
     </button>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel{{post.id}}">Comments</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="{% url 'mment'%}" method="POST" class="comment-from" id="{{post.id}}">
-                {% csrf_token %}
-                <input type="hidden" name="postSno"  id="name"><br>
-                Content: <br/>
-                <textarea name="comment" id="content" cols="35" rows="8"></textarea>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary comment" id="{{post.id}}">submit</button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel{{post.id}}">Comments</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
                 </div>
-        </form>
-      </div>
-    </div>
-    </div>
+                <div class="modal-body">
+                    <form action="{% url 'mment'%}" method="POST" class="comment-from" id="{{post.id}}">
+                            {% csrf_token %}
+                            <input type="hidden" name="postSno"  id="name"><br>
+                            Content: <br/>
+                            <textarea name="comment" id="content" cols="35" rows="8"></textarea>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary comment" id="{{post.id}}">submit</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div><br><br>
 
     <div id="main">
@@ -87,9 +87,10 @@
             {% for comment in post.comments.all %}
             <div id="maincomm">
                 <strong>User:-{{comment.user}}</strong>
-                <p id="cb">{{comment.body}}</p>
+                <p>{{comment.body}}</p>
                 <strong>Created time :-{{comment.created}}</strong>
             </div>
+
             <hr>
             {% endfor %}
         </div>
@@ -116,11 +117,13 @@
                     
                 },
                 success: function (data){
-                    // $('#maincomm').append('<p>'+data['body']+'</p>');
+                    coo='<hr><br><strong>'+"User:-"+data.users+'</strong>'+'<p >'+data.datas.body+'</p>'+'<strong>'+"Created time :-"+data.datas.created+'</strong>'
+                    $('#maincomm').append(coo);
                     $(".comment-from").trigger("reset");
-                    $('#maincomm').html([data['body']]);
-                    $(`#exampleModal${ post_id }`).hide();
-                    $(".modal-backdrop").hide();
+                    $(`#exampleModal${ post_id }`).modal('hide');
+                    // $(`#exampleModal${ post_id }`).hide();
+                    // $(".modal-backdrop").hide();
+
                 },
                 error : function(data){
                     console.log('poonam',data)
