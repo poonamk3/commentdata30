@@ -21,5 +21,6 @@ from django.contrib.auth.models import User
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('login.urls')),
+    path('api/',include('api.urls')),
     path('accounts/',include('django.contrib.auth.urls')),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

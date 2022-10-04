@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'bootstrap_modal_forms',
+    'api',
+    'rest_framework',
     
 ]
 
