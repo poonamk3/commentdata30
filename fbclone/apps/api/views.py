@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .serializer import StudentSeralizer
+from .serializer import StudentSeralizer,StudentClassSeralizer
 import io
-from .models import Student
+from .models import Student,StudentClass
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from django.http import HttpResponse
@@ -16,7 +16,27 @@ from rest_framework.mixins import CreateModelMixin
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.mixins import DestroyModelMixin
+from rest_framework.authentication import BasicAuthentication,SessionAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import viewsets
+class UserViewSet(viewsets.ModelViewSet):
+	serializer_class = StudentSeralizer
+	queryset = Student.objects.all()
+	# authentication_classes = [SessionAuthentication]
+	# permission_classes = [IsAuthenticatedOrReadOnly]
 
+class ClassStudentView(viewsets.ModelViewSet):
+	serializer_class = StudentClassSeralizer
+	queryset = StudentClass.objects.all()
+	# authentication_classes = [SessionAuthentication]
+	# permission_classes = [IsAuthenticatedOrReadOnly]
+"""
+#Read only view set use list and retrive
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+	serializer_class = StudentSeralizer
+	queryset = Student.objects.all()
+"""
+"""
 class StudentList(ListModelMixin,GenericAPIView):
 	queryset=Student.objects.all()
 	serializer_class=StudentSeralizer
@@ -49,7 +69,7 @@ class StudentDelete(DestroyModelMixin,GenericAPIView):
 		return self.destroy(request,*args,**kwargs)
 
 
-
+"""
 
 """
 class StudentApi(APIView):

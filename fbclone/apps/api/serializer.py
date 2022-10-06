@@ -1,6 +1,6 @@
 from django.db import models
 from rest_framework import serializers
-from .models import Student
+from .models import Student,StudentClass
 
 # Create your models here.
 """
@@ -11,7 +11,14 @@ class StudentSeralizer(serializers.Serializer):
 	def create(self, validated_data):
 		return Student.objects.create(**validated_data)
 """
-class StudentSeralizer(serializers.ModelSerializer):
+class StudentClassSeralizer(serializers.ModelSerializer):
     class Meta:
-        model = Student
-        fields = ['id', 'name', 'roll', 'city']
+        model = StudentClass
+        fields = ['classname']
+class StudentSeralizer(serializers.ModelSerializer):
+	stuclass=serializers.StringRelatedField(many=True,read_only=True)
+	class Meta:
+		model = Student
+		fields = ['id', 'name', 'roll', 'city','stuclass']
+
+        
